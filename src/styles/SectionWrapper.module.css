@@ -1,0 +1,21 @@
+.section {
+  padding: 4rem 2rem;
+  min-height: 100vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Optional: background variants */
+.bg-dark {
+  background-color: #0a0a0a;
+}
+
+.bg-darker {
+  background-color: #111;
+}
+
+.bg-deep {
+  background-color: #1a1a1a;
+}
