@@ -3,7 +3,9 @@ import styles from "../styles/SectionWrapper.module.css";
 
 const SectionWrapper = ({ children, background = "bg-dark" }) => {
   return (
-    <section className={`${styles.section} ${styles[background]}`}>
+    <section
+      className={` mt-5 pt-5 text-center ${styles.section} ${styles[background]}`}
+    >
       {children}
     </section>
   );
