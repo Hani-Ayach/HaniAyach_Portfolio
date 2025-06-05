@@ -11,8 +11,11 @@ import LearnToCode from "./components/LearnToCode";
 import "./styles/globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
+import ThemeProvider from "./contexts/ThemeContext";
+
 function App() {
   return (
+    <ThemeProvider>
     <Router>
       <Navbar />
       <Routes>
@@ -24,6 +27,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
       </Routes>
     </Router>
+    </ThemeProvider>
   );
 }
 

@@ -1,12 +1,16 @@
-import React from "react";
-import styles from "../styles/SectionWrapper.module.css";
+import React, { useContext } from "react";
+import { ThemeContext } from "../contexts/ThemeContext";
 
-const SectionWrapper = ({ children, background = "bg-dark" }) => {
+const SectionWrapper = ({ children }) => {
+  const { theme } = useContext(ThemeContext);
+
   return (
     <section
-      className={` mt-5 pt-5 text-center ${styles.section} ${styles[background]}`}
+      className={`py-5 ${
+        theme === "dark" ? "bg-black text-white" : "bg-light text-dark"
+      }`}
     >
-      {children}
+      <div className="container">{children}</div>
     </section>
   );
 };

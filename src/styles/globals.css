@@ -5,6 +5,23 @@ body {
   color: #f0f0f0;
 }
 
+body.dark {
+  background-color: #0d1117;
+  color: white;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.light {
+  background-color: #f8f9fa;
+  color: #212529;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+a, button {
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
 section {
   min-height: 100vh;
   padding: 4rem 2rem;

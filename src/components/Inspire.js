@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SectionWrapper from "./SectionWrapper";
+import { useContext } from "react";
+import { ThemeContext } from "../contexts/ThemeContext";
+
 
 const quotes = [
   "The best way to get started is to quit talking and begin doing. – Walt Disney",
@@ -36,20 +39,21 @@ const quotes = [
 ];
 
 const Inspire = () => {
+  const { theme } = useContext(ThemeContext);
   const [quoteIndex, setQuoteIndex] = useState(0);
   const nextQuote = () => setQuoteIndex((prev) => (prev + 1) % quotes.length);
   const navigate = useNavigate();
 
   return (
     <SectionWrapper background="bg-darker">
-      <div className="container text-white py-5 text-center">
+      <div className="container py-5 text-center">
         <h2 className="mb-4">Inspiration & Developer Wisdom</h2>
 
         <blockquote className="blockquote fs-4">
           “{quotes[quoteIndex]}”
         </blockquote>
 
-        <button className="btn btn-outline-light mt-4" onClick={nextQuote}>
+        <button className={`btn ${theme === "dark" ? "btn-outline-light" : "btn-outline-dark"} mt-4`} onClick={nextQuote}>
           Next Quote
         </button>
 

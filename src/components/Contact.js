@@ -6,8 +6,12 @@ import { ToastContainer, toast } from "react-toastify";
 import { FaEnvelope, FaLinkedin, FaGithub } from "react-icons/fa";
 import "react-toastify/dist/ReactToastify.css";
 import SectionWrapper from "./SectionWrapper";
+import { useContext } from "react";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 const Contact = () => {
+  const { theme } = useContext(ThemeContext);
+
   const handleFormSubmit = () => {
     toast.success("✅ Message sent successfully!");
   };
@@ -15,7 +19,7 @@ const Contact = () => {
   return (
     <SectionWrapper>
       <div
-        style={{ position: "relative", minHeight: "100vh", overflow: "hidden" }}
+        style={{ position: "relative", maxHeight: "100vh", overflow: "hidden" }}
       >
         {/* 3D Star Background */}
         <Canvas
@@ -27,6 +31,8 @@ const Contact = () => {
             width: "100%",
             pointerEvents: "none",
             zIndex: 0,
+            background: theme === "dark" ? "#000000" : "#f8f9fa",
+
           }}
         >
           <Stars radius={100} depth={50} count={5000} factor={4} fade />
@@ -34,7 +40,7 @@ const Contact = () => {
 
         {/* Contact Content */}
         <div
-          className="container text-white py-5 position-relative"
+          className="container py-5 position-relative"
           style={{ zIndex: 1 }}
         >
           <h2 className="text-center mb-4 display-5 fw-bold">Let’s Connect</h2>
@@ -121,7 +127,6 @@ const Contact = () => {
             <div className="d-flex justify-content-center gap-4 fs-3">
               <a
                 href="mailto:your.email@example.com"
-                className="text-white"
                 title="Email"
               >
                 <FaEnvelope />
@@ -130,7 +135,6 @@ const Contact = () => {
                 href="https://linkedin.com/in/yourprofile"
                 target="_blank"
                 rel="noreferrer"
-                className="text-white"
                 title="LinkedIn"
               >
                 <FaLinkedin />
@@ -139,7 +143,6 @@ const Contact = () => {
                 href="https://github.com/yourusername"
                 target="_blank"
                 rel="noreferrer"
-                className="text-white"
                 title="GitHub"
               >
                 <FaGithub />

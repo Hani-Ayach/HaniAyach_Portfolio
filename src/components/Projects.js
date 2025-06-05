@@ -1,11 +1,20 @@
-import React, { Suspense } from "react";
+import React, { useContext, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Stars } from "@react-three/drei";
+import SectionWrapper from "./SectionWrapper";
+import { ThemeContext } from "../contexts/ThemeContext";
 import styles from "../styles/Projects.module.css";
 
 const ProjectCard = ({ title, description, github, website, image }) => {
+  const { theme } = useContext(ThemeContext);
+  const isDark = theme === "dark";
+
   return (
-    <div className="card h-100 bg-dark text-light border border-secondary shadow">
+    <div
+      className={`card h-100 border shadow ${
+        isDark ? "bg-dark text-light border-secondary" : "bg-white text-dark border-light"
+      }`}
+    >
       {image ? (
         <img
           src={image}
@@ -18,8 +27,8 @@ const ProjectCard = ({ title, description, github, website, image }) => {
           className="d-flex align-items-center justify-content-center"
           style={{
             height: "200px",
-            backgroundColor: "#333",
-            color: "#ccc",
+            backgroundColor: isDark ? "#333" : "#e9ecef",
+            color: isDark ? "#ccc" : "#555",
             fontFamily: "monospace",
             fontSize: "1.2rem",
           }}
@@ -48,7 +57,9 @@ const ProjectCard = ({ title, description, github, website, image }) => {
               href={github}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-outline-light flex-fill"
+              className={`btn flex-fill ${
+                isDark ? "btn-outline-light" : "btn-outline-dark"
+              }`}
             >
               View Code
             </a>
@@ -71,7 +82,7 @@ const projects = [
     title: "AI Chat App",
     description: "A full-stack AI chat app using OpenAI.",
     github: "https://github.com/hanicode/ai-chat",
-    website: null, // no live site
+    website: null,
     image: null,
   },
   {
@@ -84,25 +95,43 @@ const projects = [
 ];
 
 const Projects = () => {
+  const { theme } = useContext(ThemeContext);
+
   return (
-    <section className={styles.projectsSection}>
-      <Canvas className={styles.canvasBackground}>
+    <div className="position-relative">
+      {/* 3D Background */}
+      <Canvas
+        className={styles.canvasBackground}
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          zIndex: 0,
+          background: theme === "dark" ? "#000000" : "#f8f9fa",
+          pointerEvents: "none",
+        }}
+      >
         <Suspense fallback={null}>
           <Stars radius={100} depth={50} count={5000} factor={4} fade />
         </Suspense>
       </Canvas>
 
-      <div className="container position-relative text-white py-5">
-        <h2 className="mb-5 text-center">Projects</h2>
-        <div className="row g-4">
-          {projects.map((project, index) => (
-            <div key={index} className="col-md-6 col-lg-4">
-              <ProjectCard {...project} />
-            </div>
-          ))}
+      {/* Main Content */}
+      <SectionWrapper>
+        <div className="position-relative" style={{ zIndex: 1 }}>
+          <h2 className="mb-5 text-center display-5 fw-bold">Projects [Comming Soon ;) ]</h2>
+          <div className="row g-4">
+            {projects.map((project, index) => (
+              <div key={index} className="col-md-6 col-lg-4">
+                <ProjectCard {...project} />
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </SectionWrapper>
+    </div>
   );
 };
 
