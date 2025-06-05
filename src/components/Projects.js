@@ -4,23 +4,33 @@ import { Stars } from "@react-three/drei";
 import SectionWrapper from "./SectionWrapper";
 import { ThemeContext } from "../contexts/ThemeContext";
 import styles from "../styles/Projects.module.css";
+import { useEffect, useState } from "react";
+import { supabase } from "../supabase";
 
-const ProjectCard = ({ title, description, github, website, image }) => {
+const ProjectCard = ({
+  title,
+  description,
+  github_url,
+  website_url,
+  image_base64,
+}) => {
   const { theme } = useContext(ThemeContext);
   const isDark = theme === "dark";
 
   return (
     <div
       className={`card h-100 border shadow ${
-        isDark ? "bg-dark text-light border-secondary" : "bg-white text-dark border-light"
+        isDark
+          ? "bg-dark text-light border-secondary"
+          : "bg-white text-dark border-light"
       }`}
     >
-      {image ? (
+      {image_base64 ? (
         <img
-          src={image}
+          src={`data:image/png;base64,${image_base64}`}
           className="card-img-top"
           alt={title}
-          style={{ objectFit: "cover", height: "200px" }}
+          style={{ objectFit: "fit", height: "200px" }}
         />
       ) : (
         <div
@@ -42,9 +52,9 @@ const ProjectCard = ({ title, description, github, website, image }) => {
           <p className="card-text">{description}</p>
         </div>
         <div className="d-flex flex-wrap gap-2 mt-3">
-          {website && (
+          {website_url && (
             <a
-              href={website}
+              href={website_url}
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-success flex-fill"
@@ -52,9 +62,9 @@ const ProjectCard = ({ title, description, github, website, image }) => {
               View Live
             </a>
           )}
-          {github && (
+          {github_url && (
             <a
-              href={github}
+              href={github_url}
               target="_blank"
               rel="noopener noreferrer"
               className={`btn flex-fill ${
@@ -95,6 +105,22 @@ const projects = [
 ];
 
 const Projects = () => {
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const { data, error } = await supabase.from("Projects").select("*");
+
+      console.log(data);
+      console.log("data");
+      console.log(error);
+      console.log("error");
+
+      if (data) setProjects(data);
+    };
+    fetchProjects();
+  }, []);
+
   const { theme } = useContext(ThemeContext);
 
   return (
@@ -121,7 +147,9 @@ const Projects = () => {
       {/* Main Content */}
       <SectionWrapper>
         <div className="position-relative" style={{ zIndex: 1 }}>
-          <h2 className="mb-5 text-center display-5 fw-bold">Projects [Comming Soon ;) ]</h2>
+          <h2 className="mb-5 text-center display-5 fw-bold">
+            Projects [Comming Soon ;) ]
+          </h2>
           <div className="row g-4">
             {projects.map((project, index) => (
               <div key={index} className="col-md-6 col-lg-4">
