@@ -27,7 +27,7 @@ const ProjectCard = ({
     >
       {image_base64 ? (
         <img
-          src={`data:image/png;base64,${image_base64}`}
+          src={image_base64}
           className="card-img-top"
           alt={title}
           style={{ objectFit: "fit", height: "200px" }}
@@ -147,7 +147,7 @@ const Projects = () => {
       {/* Main Content */}
       <SectionWrapper>
         <div className="position-relative" style={{ zIndex: 1 }}>
-          <h2 className="mb-5 text-center display-5 fw-bold">
+          <h2 className="my-5 text-center display-5 fw-bold">
             Projects [Comming Soon ;) ]
           </h2>
           <div className="row g-4">
