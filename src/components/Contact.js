@@ -1,16 +1,46 @@
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Stars } from "@react-three/drei";
 import { motion } from "framer-motion";
 import { ToastContainer, toast } from "react-toastify";
-import { FaEnvelope, FaLinkedin, FaGithub } from "react-icons/fa";
+import { FaEnvelope } from "react-icons/fa";
+import {
+  FaLinkedin,
+  FaGithub,
+  FaXTwitter,
+  FaYoutube,
+  FaFacebook,
+  FaInstagram,
+  FaGlobe,
+} from "react-icons/fa6";
 import "react-toastify/dist/ReactToastify.css";
 import SectionWrapper from "./SectionWrapper";
-import { useContext } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
+import { supabase } from "../supabase";
 
+const iconMap = {
+  linkedin: <FaLinkedin />,
+  github: <FaGithub />,
+  x: <FaXTwitter />,
+  twitter: <FaXTwitter />,
+  youtube: <FaYoutube />,
+  facebook: <FaFacebook />,
+  instagram: <FaInstagram />,
+  website: <FaGlobe />,
+};
 const Contact = () => {
   const { theme } = useContext(ThemeContext);
+  const [socialLinks, setSocialLinks] = useState([]);
+
+
+  useEffect(() => {
+    const fetchLinks = async () => {
+      const { data, error } = await supabase.from("SocialLinks").select("*");
+      if (!error && data) setSocialLinks(data);
+    };
+    fetchLinks();
+  }, []);
+
 
   const handleFormSubmit = () => {
     toast.success("✅ Message sent successfully!");
@@ -18,17 +48,14 @@ const Contact = () => {
 
   return (
     <SectionWrapper>
-      <div
-        style={{ position: "relative", maxHeight: "100vh", overflow: "hidden" }}
-      >
         {/* 3D Star Background */}
         <Canvas
           style={{
             position: "absolute",
             top: 0,
             left: 0,
-            height: "100%",
             width: "100%",
+            height: "120vh",
             pointerEvents: "none",
             zIndex: 0,
             background: theme === "dark" ? "#000000" : "#f8f9fa",
@@ -37,10 +64,13 @@ const Contact = () => {
         >
           <Stars radius={100} depth={50} count={5000} factor={4} fade />
         </Canvas>
+      <div
+        style={{ position: "relative", maxHeight: "110vh", overflow: "hidden" }}
+      >
 
         {/* Contact Content */}
         <div
-          className="container py-5 position-relative"
+          className="mt-5 position-relative"
           style={{ zIndex: 1 }}
         >
           <h2 className="text-center mb-4 display-5 fw-bold">Let’s Connect</h2>
@@ -121,32 +151,24 @@ const Contact = () => {
 
           {/* Social Links */}
           <div className="text-center mt-5">
-            <p className="mb-3" style={{ justifySelf: "center" }}>
-              Or reach out via:
-            </p>
+            <p className="mb-3">Or reach out via:</p>
             <div className="d-flex justify-content-center gap-4 fs-3">
-              <a
-                href="mailto:your.email@example.com"
-                title="Email"
-              >
-                <FaEnvelope />
-              </a>
-              <a
-                href="https://linkedin.com/in/yourprofile"
-                target="_blank"
-                rel="noreferrer"
-                title="LinkedIn"
-              >
-                <FaLinkedin />
-              </a>
-              <a
-                href="https://github.com/yourusername"
-                target="_blank"
-                rel="noreferrer"
-                title="GitHub"
-              >
-                <FaGithub />
-              </a>
+              {socialLinks.length > 0 ? (
+                socialLinks.map((link) => (
+                  <a
+                    key={link.id}
+                    href={link.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    title={link.platform}
+                    className={theme === "dark" ? "text-light" : "text-dark"}
+                  >
+                    {iconMap[link.icon_name?.toLowerCase()] || <FaEnvelope />}
+                  </a>
+                ))
+              ) : (
+                <p>Loading links...</p>
+              )}
             </div>
           </div>
         </div>

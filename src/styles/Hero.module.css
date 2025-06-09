@@ -9,7 +9,7 @@
 /* Overlay content block */
 .overlay {
   position: absolute;
-  top: 50%;
+  top: 55%;
   left: 50%;
   transform: translate(-90%, -140%);
   text-align: center;
