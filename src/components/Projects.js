@@ -111,11 +111,6 @@ const Projects = () => {
     const fetchProjects = async () => {
       const { data, error } = await supabase.from("Projects").select("*");
 
-      console.log(data);
-      console.log("data");
-      console.log(error);
-      console.log("error");
-
       if (data) setProjects(data);
     };
     fetchProjects();
@@ -146,39 +141,37 @@ const Projects = () => {
 
       {/* Main Content */}
       <SectionWrapper>
-  <div className="position-relative" style={{ zIndex: 1 }}>
-    <h2 className="my-5 text-center display-5 fw-bold">
-      Projects {projects.length === 0 && "[Coming Soon 😉]"}
-    </h2>
+        <div className="position-relative" style={{ zIndex: 1 }}>
+          <h2 className="my-5 text-center display-5 fw-bold">
+            {/* Projects {projects.length === 0 && "[Coming Soon 😉]"} */}
+            Projects {"[Coming Soon 😉]"}
+          </h2>
 
-    <div className="row g-4">
-      {projects.length > 0 ? (
-        projects.map((project, index) => (
-          <div key={index} className="col-md-6 col-lg-4">
-            <ProjectCard {...project} />
+          <div className="row g-4" style={{ display: "none" }}>
+            {projects.length > 0
+              ? projects.map((project, index) => (
+                  <div key={index} className="col-md-6 col-lg-4">
+                    <ProjectCard {...project} />
+                  </div>
+                ))
+              : [...Array(3)].map((_, i) => (
+                  <div key={i} className="col-md-6 col-lg-4">
+                    <div className="card placeholder-glow">
+                      <div
+                        className="card-img-top placeholder"
+                        style={{ height: "200px" }}
+                      />
+                      <div className="card-body">
+                        <h5 className="card-title placeholder col-6"></h5>
+                        <p className="card-text placeholder col-8"></p>
+                        <button className="btn btn-secondary disabled placeholder col-4"></button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
           </div>
-        ))
-      ) : (
-        [...Array(3)].map((_, i) => (
-          <div key={i} className="col-md-6 col-lg-4">
-            <div className="card placeholder-glow">
-              <div
-                className="card-img-top placeholder"
-                style={{ height: "200px" }}
-              />
-              <div className="card-body">
-                <h5 className="card-title placeholder col-6"></h5>
-                <p className="card-text placeholder col-8"></p>
-                <button className="btn btn-secondary disabled placeholder col-4"></button>
-              </div>
-            </div>
-          </div>
-        ))
-      )}
-    </div>
-  </div>
-</SectionWrapper>
-
+        </div>
+      </SectionWrapper>
     </div>
   );
 };
