@@ -1,0 +1,13 @@
+.timeline { list-style: none; padding: 0 0 0 1.5rem; margin: 2.5rem 0; border-left: 2px solid var(--border); }
+.item { position: relative; margin-bottom: 1.5rem; }
+.dot { position: absolute; left: calc(-1.5rem - 7px); top: 1.4rem; width: 12px; height: 12px; border-radius: 50%; background: var(--muted); }
+.current { background: var(--accent); box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 25%, transparent); }
+.card { padding: 1.25rem 1.5rem; }
+.role { font-size: 1.15rem; font-weight: 600; margin: 0 0 0.35rem; }
+.highlights { margin: 0; padding-left: 1.1rem; }
+.highlights li { margin-bottom: 0.3rem; line-height: 1.55; }
+.strong { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, transparent); }
+.side { position: sticky; top: calc(var(--nav-h) + 1rem); }
+.group { display: grid; grid-template-columns: 11rem 1fr; gap: 0.5rem; align-items: start; margin-bottom: 0.6rem; }
+.groupName { font-size: 0.82rem; color: var(--muted); padding-top: 0.2rem; }
+@media (max-width: 575px) { .group { grid-template-columns: 1fr; gap: 0.3rem; } }

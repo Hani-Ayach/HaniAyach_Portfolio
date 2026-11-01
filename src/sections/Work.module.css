@@ -1,0 +1,6 @@
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 1.25rem; margin-top: 2rem; }
+.card { padding: 1.5rem; display: flex; flex-direction: column; transition: border-color 0.2s ease, transform 0.2s ease; }
+.card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.title { font-size: 1.3rem; font-weight: 600; margin: 0.4rem 0 0.6rem; }
+.result { border-left: 3px solid var(--cta); padding-left: 0.75rem; font-weight: 500; }
+.link { margin-top: auto; font-weight: 600; text-decoration: none; display: inline-flex; gap: 0.5rem; align-items: center; }

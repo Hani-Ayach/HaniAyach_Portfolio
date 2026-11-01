@@ -1,0 +1,6 @@
+.skill { padding: 1.5rem; margin-top: 1rem; font-family: var(--font-mono); font-size: 0.9rem; }
+.prompt { color: var(--cta); font-weight: 600; }
+.steps { margin: 0; padding-left: 1.4rem; }
+.steps li { margin-bottom: 0.45rem; }
+.flow { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-top: 1rem; color: var(--muted); }
+.check { color: var(--good); margin-top: 0.3rem; flex-shrink: 0; }
