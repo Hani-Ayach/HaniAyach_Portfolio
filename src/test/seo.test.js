@@ -28,3 +28,15 @@ test("ships the social image, robots, sitemap and SPA rewrites", () => {
     expect(existsSync(f), f).toBe(true);
   }
 });
+
+test("has a site icon for tabs, bookmarks and phone home screens", () => {
+  expect(doc.querySelector('link[rel="icon"][type="image/svg+xml"]')?.getAttribute("href")).toBe("/favicon.svg");
+  expect(doc.querySelector('link[rel="icon"][type="image/png"]')?.getAttribute("href")).toBe("/favicon-32.png");
+  expect(doc.querySelector('link[rel="apple-touch-icon"]')?.getAttribute("href")).toBe("/apple-touch-icon.png");
+  expect(doc.querySelector('link[rel="manifest"]')?.getAttribute("href")).toBe("/site.webmanifest");
+  for (const f of ["favicon.svg", "favicon-32.png", "apple-touch-icon.png", "icon-192.png", "icon-512.png", "site.webmanifest"]) {
+    expect(existsSync(`public/${f}`), f).toBe(true);
+  }
+  const manifest = JSON.parse(readFileSync("public/site.webmanifest", "utf8"));
+  expect(manifest.icons.map((i) => i.sizes)).toEqual(["192x192", "512x512"]);
+});
