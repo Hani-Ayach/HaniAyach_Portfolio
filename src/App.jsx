@@ -6,6 +6,7 @@ import ThemeProvider from "./contexts/ThemeContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import BackToTop from "./components/BackToTop";
+import Canonical from "./components/Canonical";
 import CanvasBoundary from "./components/CanvasBoundary";
 import Home from "./pages/Home";
 
@@ -18,6 +19,7 @@ function App() {
   return (
     <ThemeProvider>
       <Router>
+        <Canonical />
         <CanvasBoundary>
           <Suspense fallback={null}>
             <StarField />

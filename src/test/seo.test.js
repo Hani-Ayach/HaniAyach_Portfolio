@@ -40,3 +40,7 @@ test("has a site icon for tabs, bookmarks and phone home screens", () => {
   const manifest = JSON.parse(readFileSync("public/site.webmanifest", "utf8"));
   expect(manifest.icons.map((i) => i.sizes)).toEqual(["192x192", "512x512"]);
 });
+
+test("index.html has no fixed canonical: each route sets its own", () => {
+  expect(doc.querySelector('link[rel="canonical"]')).toBeNull();
+});
