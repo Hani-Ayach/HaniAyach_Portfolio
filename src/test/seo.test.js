@@ -44,3 +44,13 @@ test("has a site icon for tabs, bookmarks and phone home screens", () => {
 test("index.html has no fixed canonical: each route sets its own", () => {
   expect(doc.querySelector('link[rel="canonical"]')).toBeNull();
 });
+
+test("a real favicon.ico and a 48px icon exist (Google search and older clients ask for them)", () => {
+  const ico = readFileSync("public/favicon.ico");
+  // ICO header: reserved 0, type 1 (icon), then the number of images
+  expect([ico.readUInt16LE(0), ico.readUInt16LE(2)]).toEqual([0, 1]);
+  const sizes = Array.from({ length: ico.readUInt16LE(4) }, (_, i) => ico[6 + i * 16] || 256);
+  expect(sizes).toEqual(expect.arrayContaining([16, 32, 48]));
+  expect(doc.querySelector('link[rel="icon"][sizes="48x48"]')?.getAttribute("href")).toBe("/favicon-48.png");
+  expect(existsSync("public/favicon-48.png")).toBe(true);
+});
